@@ -20,12 +20,12 @@ void addEdges(vector<pair<int, int>> edges[], int vertex_one, int vertex_two, in
 void printPrim(vector<pair<int, int>> edges[], int vertex_amount, int source_vertex)
 {
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> weighted_queue;
-    vector<int> keys(vertex_amount, INT_MAX);
+    vector<int> weights(vertex_amount, INT_MAX);
     vector<int> tree(vertex_amount, -1);
     vector<bool> vertex_included(vertex_amount, false);
 
     weighted_queue.push(make_pair(0,source_vertex));
-    keys[source_vertex] = 0;
+    weights[source_vertex] = 0;
 
     while(!weighted_queue.empty())
     {
@@ -39,10 +39,10 @@ void printPrim(vector<pair<int, int>> edges[], int vertex_amount, int source_ver
             int v = edge.first;
             int weight = edge.second;
 
-            if(vertex_included[v] == false && keys[v] > weight)
+            if(vertex_included[v] == false && weights[v] > weight)
             {
-                keys[v] = weight;
-                weighted_queue.push(make_pair(keys[v], v));
+                weights[v] = weight;
+                weighted_queue.push(make_pair(weights[v], v));
                 tree[v] = vertex;
             }
         }
