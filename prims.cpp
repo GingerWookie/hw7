@@ -23,6 +23,7 @@ void printPrim(vector<pair<int, int>> edges[], int vertex_amount, int source_ver
     vector<int> weights(vertex_amount, INT_MAX);
     vector<int> tree(vertex_amount, -1);
     vector<bool> vertex_included(vertex_amount, false);
+    int total_weight = 0;
 
     weighted_queue.push(make_pair(0,source_vertex));
     weights[source_vertex] = 0;
@@ -48,14 +49,23 @@ void printPrim(vector<pair<int, int>> edges[], int vertex_amount, int source_ver
         }
     }
 
-    for(int i = 1; i < vertex_amount; ++i)
-        cout << tree[i] << "   -   " << i << "\n";
+    for(int i = 0; i < vertex_amount; ++i)
+    {
+        total_weight += weights[i];
+        if(tree[i] == -1)
+        {
+            cout << "Vertex - " << i << " is the source vertex" << "\n";
+            continue;
+        }
+        cout << "Vertex - " << i << " is attached via edge " << i << " - " << tree[i] << "\n";
+    }
+    cout << "Total Weight of Path is = " << total_weight << "\n";
 }
 
 int main()
 {
     int vertex_amount = 10;
-    int source_vertex = 0;
+    int source_vertex = 9;
     vector<pair<int, int>> edges[vertex_amount];
 
     /*    GRAPH
@@ -84,16 +94,4 @@ int main()
     addEdges(edges, 6, 9, 9);
 
     printPrim(edges, vertex_amount, source_vertex);
-
-    /*    GRAPH
-            0
-             \
-          1   2
-           \ / \
-        3   4   5
-       / \ / \ / \
-      6   7   8   9
-       \         /
-        \-------/
-    */
 }
